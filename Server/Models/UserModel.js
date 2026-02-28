@@ -13,11 +13,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    firstName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     lastName: {
       type: String,
       trim: true,
@@ -34,6 +29,16 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
+    gender: {
+      type: String,
+      default: "Male",
+    },
+    bio: {
+      type: String,
+    },
+    private: { type: Boolean, default: false },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     avatar: { type: String },
     avatar_public_id: { type: String },
     resetPasswordToken: { type: String },

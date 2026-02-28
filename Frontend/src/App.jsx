@@ -8,6 +8,8 @@ import RegisterPage from "./Pages/RegisterPage.jsx";
 import ForgotPassword from "./Pages/ForgotPassword.jsx";
 import ResetPassword from "./Pages/ResetPassword.jsx";
 import ProfilePage from "./Pages/ProfilePage.jsx";
+import ProfileEdit from "./Pages/ProfileEdit.jsx";
+import StatsPage from "./Pages/StatsPage.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 
 import ProtectedRoutes from "./Components/ProtectedRoutes.jsx";
@@ -28,6 +30,8 @@ const App = () => {
 
           <Route element={<ProtectedRoutes />}>
             <Route path="/:username" element={<ProfilePage />} />
+            <Route path="/:username/edit" element={<ProfileEdit />} />
+            <Route path="/:username/stats" element={<StatsPage />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -3,6 +3,7 @@ import { sendResponse } from "../Utils/Response.js";
 import {
   getUserByUsernameService,
   updateUserProfileService,
+  followUserService,
 } from "../Services/user.service.js";
 
 export const getUserByUsername = asyncHandler(async (req, res) => {
@@ -22,4 +23,21 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
   sendResponse(res, 200, true, "Profile updated successfully", {
     user: updatedUser,
   });
+});
+
+export const followUser = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const targetUserId = req.params.userId;
+
+    const updatedUser = await followUserService(userId, targetUserId);
+
+    sendResponse(res, 200, true, "User followed successfully", {
+      user: updatedUser,
+    });
+  } catch (error) {
+    sendResponse(res, 500, false, "Failed to follow user", {
+      error: error.message,
+    });
+  }
 });

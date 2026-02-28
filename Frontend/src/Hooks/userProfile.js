@@ -5,10 +5,13 @@ import {
   uploadProfileImage,
 } from "../Services/userService.js";
 import { useAuth } from "../Api/AuthContext.jsx";
+import axios from "axios";
 
 export const useProfile = () => {
-  const { user } = useAuth();
+  const { setUser } = useAuth();
 
+  const [loading, setLoading] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const [progress, setProgress] = useState(0);
   const [imageFile, setImageFile] = useState(null);
@@ -59,15 +62,38 @@ export const useProfile = () => {
     }
   };
 
+  const handleFollowUnfollow = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URI}/user/${userProfile._id}/follow`,
+        {},
+        { withCredentials: true },
+      );
+      if (response.data?.user?.following.includes(userProfile?._id)) {
+        setIsFollowing(true);
+      } else {
+        setIsFollowing(false);
+      }
+    } catch (error) {
+      console.error("Error following/unfollowing user:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     userProfile,
     progress,
     imageFile,
     imagePreview,
+    isFollowing,
+    loading,
     fetchUser,
     setImagePreview,
     setImageFile,
     handleChange,
     handleUpload,
+    handleFollowUnfollow,
   };
 };

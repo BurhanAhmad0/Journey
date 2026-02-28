@@ -10,3 +10,8 @@ export const uploadProfileImage = (formData, onUploadProgress) =>
     withCredentials: true,
     onUploadProgress,
   });
+
+export const updateProfileService = (data) =>
+  axios.post(`${API}/profile/update`, data, {
+    withCredentials: true,
+  });
