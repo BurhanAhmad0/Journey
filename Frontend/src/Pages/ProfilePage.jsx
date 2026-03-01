@@ -4,6 +4,7 @@ import { useProfile } from "../Hooks/userProfile.js";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../Api/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { Lock } from "lucide-react";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -52,11 +53,13 @@ const ProfilePage = () => {
         <div className="w-full flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="font-semibold text-4xl text-black leading-none">
+              <h2 className="flex items-center gap-3 font-semibold text-4xl text-black leading-none">
                 {userProfile
                   ? userProfile?.firstName + " " + userProfile?.lastName
                   : user?.firstName + " " + user?.lastName}
+                {userProfile?.private && <Lock />}
               </h2>
+
               <small className="font-medium text-xs text-gray-600 leading-none">
                 @{userProfile ? userProfile?.username : user?.username}
               </small>
@@ -120,6 +123,15 @@ const ProfilePage = () => {
               <span>Following</span>
             </div>
           </div>
+
+          {userProfile?.private && (
+            <div className="flex items-center justify-center gap-3  bg-black px-10 py-3 rounded-md mt-5">
+              <Lock size={20} stroke="white" />
+              <p className="font-medium text-xl text-white">
+                This account is private
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

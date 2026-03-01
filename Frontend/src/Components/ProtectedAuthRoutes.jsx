@@ -13,7 +13,7 @@ const ProtectedAuthRoutes = () => {
       ) : !user ? (
         <Outlet />
       ) : (
-        <Navigate to={`/@${user?.username}`} />
+        <Navigate to={`/${user?.username}`} />
       )}
     </div>
   );

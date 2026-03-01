@@ -41,7 +41,7 @@ export const updateProfileInfo = async (req, res) => {
     if (username) user.username = username;
     if (bio) user.bio = bio;
     if (gender) user.gender = gender;
-    if (account_status) user.private = account_status;
+    if (account_status !== undefined) user.private = account_status;
     await user.save();
 
     res.status(200).json({
